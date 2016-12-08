@@ -1,0 +1,69 @@
+This is a simple server for backup todoItemServer
+The system contains Backup. Backup has id, date, and status {"In progess", "Ok", "Fail"}
+
+
+Start server
+The server requires Java SE 8 to run.
+  Run the java jar file
+    java -jar target/restapi-0.0.1-SNAPSHOT.jar
+
+Build the application 
+
+Linux/OSX:
+ Change access permissions to the start script
+   sudo chmod 755 mvnw
+ Run the buildscript
+   mvnw clean packge
+
+Windows:
+ Run the buildscript
+   mvnw clean packge
+
+The server startup on port 8080 and you can access it at http://localhost:8080
+
+
+Backup accounts
+This API will initiate a complete backup of all todo items in the TodoItemServer. The backup is asynchronous and the API will return the the id for the initiated backup.
+
+Request: POST /backups
+Request body: N/A
+Response body:
+
+```
+{
+ “backupId”: <backupId>
+}
+```
+List backups
+This API will list all backups that have initiated. Backup status is one of the following:
+•	In progress
+•	OK
+•	Failed
+Request: GET /backups
+Request body: N/A
+Response body:
+  ```
+  [
+ {
+ “backupId”: “<backup id>”,
+  “date”: “<backup date>”,
+ 
+“status”: “<backup status>”
+    },
+    {
+      …
+    }
+  ]
+  ```
+
+Export backup
+This API will return the content of a specified backup id the CSV format specified below.
+
+Request: GET /exports/{backup id}
+Request body: N/A
+Response body:
+  ```
+  Username;TodoItemId;Subject;DueDate;Done
+  {username};{todoitemid};{subject};{duedate};{done}
+
+  ```
